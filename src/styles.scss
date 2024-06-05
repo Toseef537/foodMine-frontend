@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a {
+    @apply text-text-primary hover:bg-text-hover hover:text-[#ffff]  min-w-96 p-2 text-base;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200..900&display=swap');
+
+html,
+body {
+    height: 100%;
+ font-family: 'Roboto', sans-serif;;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
