@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule, NgFor, NgOptimizedImage } from '@angular/common';
 import { IFood } from 'src/app/shared/models/food';
 import { HomeService } from 'src/app/common/services/website/home.service';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { SearchComponent } from '../../components/search/search.component';
 
 @Component({
@@ -16,21 +16,25 @@ export class HomeComponent {
   foodItems: any;
   searchValue: any;
   #homeService: HomeService = inject(HomeService);
+  #router: Router = inject(Router);
 
   /**
    * Getting All Food Items
    */
-  constructor() {
-    if (this.searchValue) {
-      this.#homeService.getFoodBySearchTerm(this.searchValue);
-      this.foodItems = this.#homeService.searchItems;
-    } else {
-      this.#homeService.getAllFoodItems().subscribe((res) => {
-        this.foodItems = res;
-        console.log('food items', res);
+  constructor(activatedRoute: ActivatedRoute) {
+    activatedRoute.params.subscribe((param) => {
+      if (param['searchTerm']) {
+        this.#homeService.getFoodBySearchTerm(param['searchTerm']);
+        this.foodItems = this.#homeService.searchItems;
+      } else {
+        this.#homeService.getAllFoodItems().subscribe((res) => {
+          this.foodItems = res;
+          console.log('food items', res);
 
-      })
-    }
+        })
+      }
+    })
+
 
   }
   /**
@@ -38,8 +42,6 @@ export class HomeComponent {
     */
 
   search(searchValue: string) {
-    this.#homeService.getFoodBySearchTerm(searchValue);
-    this.foodItems = this.#homeService.searchItems;
-    this.searchValue = searchValue;
+    this.#router.navigate(['/search/' + searchValue])
   }
 }
