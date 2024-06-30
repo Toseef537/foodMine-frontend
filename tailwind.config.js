@@ -3,7 +3,7 @@ module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
     colors:{
-      'text-primary':'#af1313',
+      'primary':'#af1313',
       'text-hover':'#e72929',
       'white':'#ffff'
     },
@@ -21,7 +21,15 @@ module.exports = {
       sans: `"Poppins"`,
       serif: `"IBM Plex Sans"`,
     },
-    extend: {},
+    extend: {
+      boxShadow: {
+        'tableBoxShadow': '0px 0px 10px 1px rgba(0, 0, 0, 0.1)',
+        'inputBoxShadow': '0px 0px 19.3px 1px rgba(0, 0, 0, 0.05)',
+        'cardBoxShadow' : '0px 1.12px 19.01px 2.01px rgba(0, 91, 174, 0.07);',
+        'sidebarBoxShadow': '0px 1.12px 19.01px 2.01px rgba(0, 91, 174, 0.07);',
+        'notificationShadow': '0px 4px 15px 2px rgba(0, 0, 0, 0.2);'
+      },
+    },
   },
   plugins: [],
 }
