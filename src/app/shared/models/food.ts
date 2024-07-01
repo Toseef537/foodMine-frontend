@@ -9,3 +9,8 @@ export interface IFood {
     origins: string[];
     cookTime: string;
 }
+
+export interface ITag{
+    name:string;
+    count:number;
+}
