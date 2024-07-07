@@ -4,11 +4,12 @@ import { IFood, ITag } from 'src/app/shared/models/food';
 import { HomeService } from 'src/app/common/services/website/home.service';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SearchComponent } from '../../components/search/search.component';
+import { NotFoundComponent } from 'src/app/common/components/not-found/not-found.component';
 
 @Component({
   selector: 'website-home',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, NgFor, RouterLink, SearchComponent,RouterLinkActive],
+  imports: [CommonModule, NgOptimizedImage, NgFor, RouterLink, SearchComponent,RouterLinkActive,NotFoundComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -45,6 +46,7 @@ export class HomeComponent {
       }
     })
   }
+
   /**
     * Getting Searched Food Items
     */
