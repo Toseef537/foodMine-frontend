@@ -4,7 +4,7 @@
     </div>
 
     <nav>
-        <ul class="flex gap-5">
+        <ul class="flex items-center gap-5">
             <li>
                 <a routerLink="/login">Login</a>
             </li>
@@ -27,9 +27,13 @@
                     </button>
                 </mat-menu>
             </li>
-            <li>
-                <a routerLink="/cart">Cart<span class="bg-text-hover text-white ml-3 w-5 h-5 rounded-full">3</span></a>
+            <li class="relative">
+                <a routerLink="/cart-page" >Cart
+                   
+                        <span *ngIf="totalCount" class="bg-text-hover text-white text-xs ml-3 w-4 h-4 p-1 rounded-full flex items-center justify-center absolute -right-[1.2rem] -top-1">{{totalCount}}</span>
+                  
+                </a>
             </li>
         </ul>
     </nav>
-</header>
+</header> 
