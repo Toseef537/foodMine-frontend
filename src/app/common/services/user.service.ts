@@ -18,7 +18,9 @@ export class UserService {
     this.userObservable = this.userSubject.asObservable();
   }
 
-
+get currentUser():User{
+  return this.userSubject.value;
+}
 
   /**
   * 

@@ -4,6 +4,7 @@ import { FoodDetailComponent } from "./pages/food-detail/food-detail.component";
 import { CartPageComponent } from "./pages/cart-page/cart-page.component";
 import { LoginComponent } from "src/app/auth/login/login.component";
 import { RegisterComponent } from "src/app/auth/register/register.component";
+import { CheckoutPageComponent } from "./pages/checkout-page/checkout-page.component";
 
 export default [
     {
@@ -14,5 +15,7 @@ export default [
     { path: 'tag/:tag', component: HomeComponent },
     { path: 'cart-page', component: CartPageComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent }
+    { path: 'register', component: RegisterComponent },
+    { path: 'checkout', component:CheckoutPageComponent }
+
 ] as Routes
