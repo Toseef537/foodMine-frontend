@@ -1,3 +1,8 @@
+<!-- Loading Component  -->
+<ng-container *ngIf="isLoading">
+    <loading></loading>
+</ng-container>
+
 <div class="">
     <!-- Website Header  -->
     <div>
@@ -6,7 +11,7 @@
     <!-- Website Content  -->
     <div class="my-5">
         <router-outlet></router-outlet>
-         <!-- <website-home></website-home> -->
+        <!-- <website-home></website-home> -->
     </div>
     <!-- Website Footer  -->
     <div>
