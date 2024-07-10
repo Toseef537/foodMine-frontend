@@ -1,24 +1,82 @@
-import { Injectable } from '@angular/core';
-import { foodData } from '../../../data'
-import { Observable, of } from 'rxjs';
-import { IFood } from 'src/app/shared/models/food';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, ReplaySubject, map, of, tap } from 'rxjs';
+import { IFood, ITag } from 'src/app/shared/models/food';
+import { HttpClient } from '@angular/common/http';
+import { FOODS_BY_ID_URL, FOODS_BY_SEARCH_URL, FOODS_BY_TAG_URL, FOODS_TAGS_URL, FOODS_URL, LOGIN_URL } from 'src/app/constants/urls';
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
-  searchItems: any;
+  #homePageData: BehaviorSubject<IFood[]> = new BehaviorSubject<IFood[]>([]);
+  #http: HttpClient = inject(HttpClient)
   constructor() { }
 
-  getAllFoodItems(): Observable<IFood[]> {
-    return of(foodData)
+  /**
+   *  Getter Method For Food Items
+   * */
+
+  get homePageData$(): Observable<IFood[]> {
+    return this.#homePageData.asObservable();
   }
-  getFoodBySearchTerm(searchTerm: string) {
-    this.getAllFoodItems().subscribe((res) => {
-      this.searchItems = res.filter((item) => {
-       return item.name.toLowerCase().includes(searchTerm.toLowerCase());
+
+  /**
+   * Getting All Food Items
+   */
+  getAllFoodItems(): Observable<IFood[]> {
+    return this.#http.get<IFood[]>(FOODS_URL).pipe(
+      tap((data) => {
+        this.#homePageData.next(data)
       })
-    })
+    )
+  }
+
+  /**
+   * Getting Food Items According To Search Terms
+   */
+  getFoodBySearchTerm(searchTerm: string) {
+    return this.#http.get<IFood[]>(FOODS_BY_SEARCH_URL + searchTerm).pipe(
+      map((items) => {
+        this.#homePageData.next(items);
+        return items;
+      }
+      )
+    )
+  }
+
+
+  /**
+   * Getting Food Item By ID
+   */
+  getFoodById(id: any): Observable<any> {
+    return this.#http.get<IFood>(FOODS_BY_ID_URL + id)
 
   }
+
+  /**
+ * Getting All Tags
+ */
+  getAllTag(): Observable<ITag[]> {
+    return this.#http.get<ITag[]>(FOODS_TAGS_URL);
+  }
+
+  /**
+  * Getting Food Items By Tag
+  */
+  getFoodByTag(tag: string): Observable<IFood[]> {
+    return tag === 'all' ? this.getAllFoodItems() : this.#http.get<IFood[]>(FOODS_BY_TAG_URL + tag).pipe(
+      map((items) => {
+        this.#homePageData.next(items);
+        return items;
+
+      }
+      )
+    )
+  }
+
+
+ 
+
 
 }
+
+

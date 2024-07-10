@@ -4,31 +4,30 @@
     </div>
 
     <nav>
-        <ul class="flex gap-5">
-            <li>
+        <ul class="flex items-center gap-5">
+            <li *ngIf="!isAuth">
                 <a routerLink="/login">Login</a>
             </li>
-            <li class="menu-container flex gap-5 relative group:">
-                <button  [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                    <a routerLink="/profile">John</a>
+            <li class="menu-container flex gap-5 relative group:" *ngIf="isAuth">
+                <button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <a routerLink="/profile">{{user.name}}</a>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>
-                        <mat-icon>dialpad</mat-icon>
-                        <span>Redial</span>
+                    <button  class="w-full">
+                        Profile
                     </button>
-                    <button mat-menu-item disabled>
-                        <mat-icon>voicemail</mat-icon>
-                        <span>Check voice mail</span>
-                    </button>
-                    <button mat-menu-item>
-                        <mat-icon>notifications_off</mat-icon>
-                        <span>Disable alerts</span>
+                    <button (click)="logout()" class="w-full">
+                        Logout
                     </button>
                 </mat-menu>
             </li>
-            <li>
-                <a routerLink="/cart">Cart<span class="bg-text-hover text-white ml-3 w-5 h-5 rounded-full">3</span></a>
+            <li class="relative">
+                <a routerLink="/cart-page">Cart
+
+                    <span *ngIf="totalCount"
+                        class="bg-text-hover text-white text-xs ml-3 w-4 h-4 p-1 rounded-full flex items-center justify-center absolute -right-[1.2rem] -top-1">{{totalCount}}</span>
+
+                </a>
             </li>
         </ul>
     </nav>
