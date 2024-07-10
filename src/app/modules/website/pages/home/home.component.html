@@ -16,7 +16,7 @@
     <!-- Home Page Content  -->
     <ng-container *ngIf="foodItems.length">
         <!-- Tags  -->
-        <div class="flex gap-3 mt-16">
+        <div class="flex flex-wrap gap-3 mt-16">
             <a routerLink="/tag/{{tag.name}}" routerLinkActive="active" *ngFor="let tag of tags"
                 class="bg-[#f0f0f0] text-[13px] rounded-lg py-1 px-5">
                 {{tag.name}}({{tag.count}})

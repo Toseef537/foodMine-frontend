@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
-import { foodData } from '../../../data'
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject, map, of, tap } from 'rxjs';
 import { IFood, ITag } from 'src/app/shared/models/food';
-import { sample_tags } from '../../../data'
+import { HttpClient } from '@angular/common/http';
+import { FOODS_BY_ID_URL, FOODS_BY_SEARCH_URL, FOODS_BY_TAG_URL, FOODS_TAGS_URL, FOODS_URL, LOGIN_URL } from 'src/app/constants/urls';
 @Injectable({
   providedIn: 'root'
 })
 export class HomeService {
   #homePageData: BehaviorSubject<IFood[]> = new BehaviorSubject<IFood[]>([]);
+  #http: HttpClient = inject(HttpClient)
   constructor() { }
 
   /**
@@ -22,7 +23,7 @@ export class HomeService {
    * Getting All Food Items
    */
   getAllFoodItems(): Observable<IFood[]> {
-    return of(foodData).pipe(
+    return this.#http.get<IFood[]>(FOODS_URL).pipe(
       tap((data) => {
         this.#homePageData.next(data)
       })
@@ -33,14 +34,10 @@ export class HomeService {
    * Getting Food Items According To Search Terms
    */
   getFoodBySearchTerm(searchTerm: string) {
-    return this.getAllFoodItems().pipe(
+    return this.#http.get<IFood[]>(FOODS_BY_SEARCH_URL + searchTerm).pipe(
       map((items) => {
-        const filteredItems = items.filter((item) =>
-          item.name.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        this.#homePageData.next(filteredItems);
-        return filteredItems;
-
+        this.#homePageData.next(items);
+        return items;
       }
       )
     )
@@ -51,36 +48,33 @@ export class HomeService {
    * Getting Food Item By ID
    */
   getFoodById(id: any): Observable<any> {
-    return this.getAllFoodItems().pipe(
-      map((items) => {
-        return items.find(food => food.id == id)
-      })
-    )
+    return this.#http.get<IFood>(FOODS_BY_ID_URL + id)
+
   }
 
   /**
  * Getting All Tags
  */
   getAllTag(): Observable<ITag[]> {
-    return of(sample_tags)
+    return this.#http.get<ITag[]>(FOODS_TAGS_URL);
   }
 
   /**
   * Getting Food Items By Tag
   */
-  getFoodByTag(tag: string) {
-    return tag === 'All Food' ? this.getAllFoodItems() : this.getAllFoodItems().pipe(
+  getFoodByTag(tag: string): Observable<IFood[]> {
+    return tag === 'all' ? this.getAllFoodItems() : this.#http.get<IFood[]>(FOODS_BY_TAG_URL + tag).pipe(
       map((items) => {
-        const filteredItems = items.filter((item) =>
-          item.name.toLowerCase().includes(tag.toLowerCase())
-        )
-        this.#homePageData.next(filteredItems);
-        return filteredItems;
+        this.#homePageData.next(items);
+        return items;
 
       }
       )
     )
   }
+
+
+ 
 
 
 }
