@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { icon, LatLng, LatLngExpression, LatLngTuple, LeafletMouseEvent, map, Map, marker, Marker, tileLayer } from 'leaflet';
 import { LocationService } from '../../services/location.service';
@@ -11,10 +11,12 @@ import { Order } from 'src/app/shared/models/order';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnChanges {
   @ViewChild('map', { static: true })
   mapRef!: ElementRef;
   @Input() order!: Order;
+  @Input() readonly: boolean = false;
+
   map!: Map;
   currentMarker!: Marker;
   #locationService = inject(LocationService);
@@ -31,10 +33,33 @@ export class MapComponent implements OnInit {
     iconAnchor: [21, 42],
   });
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
+    if (!this.order) return;
     this.initializeMap();
+
+    if (this.readonly && this.addressLatLng) {
+      this.showLocationOnReadonlyMode();
+    }
   }
 
+  /**
+   * Making Map All Features Disable
+   */
+  showLocationOnReadonlyMode() {
+    const m = this.map;
+    this.setMarker(this.addressLatLng);
+    m.setView(this.addressLatLng, this.MARKER_ZOOM_LEVEL);
+
+    m.dragging.disable();
+    m.touchZoom.disable();
+    m.doubleClickZoom.disable();
+    m.scrollWheelZoom.disable();
+    m.boxZoom.disable();
+    m.keyboard.disable();
+    m.off('click');
+    m.tap?.disable();
+    this.currentMarker.dragging?.disable();
+  }
   /**
      * Initializing Map
      */
@@ -97,5 +122,12 @@ export class MapComponent implements OnInit {
     latlng.lng = parseFloat(latlng.lng.toFixed(8));
     this.order.addressLatlng = latlng;
     console.log(this.order.addressLatlng);
+  }
+
+  /**
+     * Getting Address
+     */
+  get addressLatLng() {
+    return this.order.addressLatlng!!;
   }
 }

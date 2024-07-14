@@ -50,6 +50,10 @@ export class LoginComponent implements OnInit {
     };
     this.#userService.login(user).subscribe((res) => {
       console.log('res from server', res);
+      if(res.isAdmin){
+        this.#router.navigateByUrl('/dashboard');
+        return;
+      }
       this.#router.navigateByUrl(this.returnurl)
 
     })

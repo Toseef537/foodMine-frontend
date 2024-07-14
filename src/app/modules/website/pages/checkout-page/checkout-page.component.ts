@@ -2,17 +2,18 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from 'src/app/common/services/user.service';
 import { CartService } from 'src/app/common/services/website/cart.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Order } from 'src/app/shared/models/order';
 import { ToastrService } from 'ngx-toastr';
 import { InputContainerComponent } from 'src/app/common/components/input-container/input-container.component';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MapComponent } from 'src/app/common/components/map/map.component';
+import { OrderService } from 'src/app/common/services/order.service';
 
 @Component({
   selector: 'app-checkout-page',
   standalone: true,
-  imports: [CommonModule,InputContainerComponent,ReactiveFormsModule,RouterLink,MapComponent],
+  imports: [CommonModule, InputContainerComponent, ReactiveFormsModule, RouterLink, MapComponent],
   templateUrl: './checkout-page.component.html',
   styleUrls: ['./checkout-page.component.scss']
 })
@@ -21,6 +22,8 @@ export class CheckoutPageComponent implements OnInit {
   #userService = inject(UserService);
   #cartService = inject(CartService);
   #toastrService = inject(ToastrService);
+  #orderService = inject(OrderService);
+  #router = inject(Router);
 
   #fb = inject(FormBuilder);
   order: Order = new Order();
@@ -38,18 +41,31 @@ export class CheckoutPageComponent implements OnInit {
     this.createOrder();
   }
 
-  private fc(){
-    return this.checkoutForm.controls;
+  private fc(control: string): FormControl {
+    return this.checkoutForm.get(control) as FormControl;
   }
 
-  createOrder(){
-    if(this.checkoutForm.invalid){
+  createOrder() {
+    if (this.checkoutForm.invalid) {
       this.#toastrService.warning('Please fill the inputs', 'Invalid Inputs')
       return;
     }
+    if (!this.order.addressLatlng) {
+      this.#toastrService.warning('Please Select Your Location On Map', 'Location')
+      return
+    }
+    this.order.name = this.checkoutForm.value.name;
+    this.order.address = this.checkoutForm.value.address;
+    this.#orderService.createOrder(this.order).subscribe({
+      next: () => {
+        this.#router.navigateByUrl('/payment');
+      },
+      error: (errorResponse) => {
+        this.#toastrService.error(errorResponse.error, 'Cart');
+      }
+    })
+    console.log('value is dfdf', this.checkoutForm.value);
 
-    console.log('value is dfdf',this.fc.name);
-    
   }
 
 

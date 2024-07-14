@@ -75,7 +75,7 @@ get currentUser():User{
   logout() {
     this.userSubject.next(new User());
     localStorage.removeItem(USER_KEY);
-    // window.location.reload();
+    window.location.reload();
   }
 
   private setUserToLocalStorage(user: User) {
