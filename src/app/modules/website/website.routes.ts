@@ -6,6 +6,7 @@ import { LoginComponent } from "src/app/auth/login/login.component";
 import { RegisterComponent } from "src/app/auth/register/register.component";
 import { CheckoutPageComponent } from "./pages/checkout-page/checkout-page.component";
 import { AuthGuard } from "src/app/auth/guards/auth.guard";
+import { PaymentPageComponent } from "./pages/payment-page/payment-page.component";
 
 export default [
     {
@@ -17,6 +18,8 @@ export default [
     { path: 'cart-page', component: CartPageComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'checkout', component:CheckoutPageComponent ,canActivate:[AuthGuard]}
+    { path: 'checkout', component:CheckoutPageComponent ,canActivate:[AuthGuard]},
+    { path: 'payment', component:PaymentPageComponent ,canActivate:[AuthGuard]}
+
 
 ] as Routes

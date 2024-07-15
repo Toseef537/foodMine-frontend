@@ -23,3 +23,18 @@ body {
 .active {
     @apply bg-primary text-white;
 }
+
+/* Call To Action */
+.call-to-action-outlined {
+    @apply text-primary border border-primary lg:text-base px-8 py-2 bg-white font-normal rounded-[0.625rem];
+
+    &:hover,
+    &:focus {
+        @apply text-white;
+        background: rgb(70, 140, 255);
+        border: 1px solid rgb(20, 74, 225);
+        transition: 0.3s ease-in-out;
+    }
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

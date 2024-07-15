@@ -6,24 +6,28 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import { LoadingInterceptor } from './common/interceptors/loading.interceptor';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimations(),
-    provideHttpClient(
-      withInterceptorsFromDi(),
-    ),
+    provideHttpClient(withInterceptorsFromDi()),
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoadingInterceptor,
-      multi: true,
-    }
-    , provideToastr(
-      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: LoadingInterceptor,
+        multi: true,
+    },
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true,
+    },
+    provideToastr({
         timeOut: 3000,
         positionClass: 'toast-top-right',
         newestOnTop: false
-      }
-    ),]
+    }),
+    provideAnimations()
+]
 };
