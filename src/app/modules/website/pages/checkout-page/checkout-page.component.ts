@@ -38,7 +38,6 @@ export class CheckoutPageComponent implements OnInit {
       name: [name, Validators.required],
       address: [address, Validators.required]
     })
-    this.createOrder();
   }
 
   private fc(control: string): FormControl {
@@ -52,7 +51,7 @@ export class CheckoutPageComponent implements OnInit {
     }
     if (!this.order.addressLatlng) {
       this.#toastrService.warning('Please Select Your Location On Map', 'Location')
-      return
+      return;
     }
     this.order.name = this.checkoutForm.value.name;
     this.order.address = this.checkoutForm.value.address;

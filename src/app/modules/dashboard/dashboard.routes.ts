@@ -3,7 +3,7 @@ import { HomeComponent } from "./home/home.component";
 
 export default [
     {
-        path: '',component:HomeComponent
+        path: '', loadChildren: () => import('./home/dashboard-home.routes')
     },
 
 ] as Routes
