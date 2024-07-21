@@ -8,6 +8,9 @@
             <li *ngIf="!isAuth">
                 <a routerLink="/login">Login</a>
             </li>
+            <li>
+                <a routerLink="/dashboard">Dashboard</a>
+            </li>
             <li class="menu-container flex gap-5 relative group:" *ngIf="isAuth">
                 <button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                     <a routerLink="/profile">{{user.name}}</a>

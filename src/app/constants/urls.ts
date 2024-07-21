@@ -10,6 +10,8 @@ export const SIGNUP_URL = BASE_URL + "/api/users/signup";
 export const ORDER_URL = BASE_URL + "/api/orders";
 export const ORDER_CREATE_URL = ORDER_URL + "/create";
 export const ORDER_NEW_FOR_CURRENT_USER_URL = ORDER_URL + '/newOrderForCurrentUser';
+export const DELETE_FOOD_URL = FOODS_URL + "/delete";
+
 
 
 
