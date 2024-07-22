@@ -7,6 +7,7 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptor
 import { provideToastr } from 'ngx-toastr';
 import { LoadingInterceptor } from './common/interceptors/loading.interceptor';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 export const appConfig: ApplicationConfig = {
   providers: [
