@@ -4,6 +4,8 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { InputContainerComponent } from '../../components/input-container/input-container.component';
 import { FoodService } from '../../services/food.service';
 import { DialogRef } from '@angular/cdk/dialog';
+import { HomeService } from '../../services/website/home.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'add-food',
@@ -15,8 +17,10 @@ import { DialogRef } from '@angular/cdk/dialog';
 export class AddFoodComponent implements OnInit {
   addFoodForm!: FormGroup;
   #fb = inject(FormBuilder);
-  #dialogRef=inject(DialogRef)
-  #foodServicde = inject(FoodService);
+  #dialogRef = inject(DialogRef)
+  #foodService = inject(FoodService);
+  #homeService = inject(HomeService);
+  #toastrService=inject(ToastrService);
 
   ngOnInit(): void {
     this.addFoodForm = this.#fb.group({
@@ -39,14 +43,15 @@ export class AddFoodComponent implements OnInit {
       this.addFoodForm.markAllAsTouched();
       return;
     }
-    this.#foodServicde.addFood(this.addFoodForm.value).subscribe((res)=>{
-      console.log('add food response',res);
-      if(res){
+    this.#foodService.addFood(this.addFoodForm.value).subscribe((res) => {
+      console.log('add food response', res);
+      if (res) {
+        this.#homeService.getAllFoodItems().subscribe();
+        this.#toastrService.success('Food Added Successfull!');
         this.addFoodForm.reset();
         this.closeDialog();
-        window.location.reload()
       }
-      
+
     })
 
   }

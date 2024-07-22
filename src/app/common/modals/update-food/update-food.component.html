@@ -1,7 +1,7 @@
 <div
     class="container flex flex-col items-center justify-center font-sans w-full bg-white shadow-cardBoxShadow p-5 rounded-2xl">
-    <h1 class="my-5 font-serif font-medium text-3xl text-primary">Add Food</h1>
-    <form [formGroup]="updateForm" (ngSubmit)="updateFood()">
+    <h1 class="my-5 font-serif font-medium text-3xl text-primary">Update Food</h1>
+    <form [formGroup]="updateForm" (ngSubmit)="updateFood(updateForm.value)">
         <div class="grid grid-cols-2 gap-4">
             <!-- Name  -->
             <input-container labelFor="name" label="Name* ">

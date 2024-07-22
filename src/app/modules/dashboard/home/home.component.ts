@@ -17,7 +17,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  foodItems!: IFood[];
+  foodItems: IFood[]=[];
   #foodItem!: Observable<IFood>;
   #homeService = inject(HomeService);
   #foodService = inject(FoodService);
@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
       console.log('dashboard foods', foods);
 
     })
+    this.#homeService.getAllFoodItems().subscribe();
   }
 
   addFood() {
@@ -41,10 +42,9 @@ export class HomeComponent implements OnInit {
   deleteFood(id: string) {
     this.#foodService.deleteFood(id).subscribe((deletedFood) => {
       if (deletedFood) {
-        this.#toastrService.success('Food Deleted Successfully', 'Deleted')
+        this.#toastrService.success('Food Deleted Successfully', 'Deleted');
+        this.#homeService.getAllFoodItems().subscribe();
       }
-      window.location.reload();
-
     })
   }
 
