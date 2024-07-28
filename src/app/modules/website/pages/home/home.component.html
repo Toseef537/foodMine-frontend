@@ -1,6 +1,6 @@
 <section class="container" id="home-page">
     <!-- Search  -->
-    <div class="flex justify-center">
+    <div class="flex justify-center my-10">
         <input type="text" #searchInput placeholder="Search Food Mine!" (keyup.enter)="search(searchInput.value)"
             class="py-2 px-4 shadow-cardBoxShadow rounded-tl-full rounded-bl-full outline-none placeholder:text-sm">
         <button class="text-sm text-white font-sans bg-primary rounded-tr-full rounded-br-full px-2 opacity-90 hover:opacity-100"
@@ -16,7 +16,7 @@
     <!-- Home Page Content  -->
     <ng-container *ngIf="foodItems.length">
         <!-- Tags  -->
-        <div class="flex flex-wrap gap-3 mt-16">
+        <div class="flex flex-wrap gap-3">
             <a routerLink="/tag/{{tag.name}}" routerLinkActive="active" *ngFor="let tag of tags"
                 class="bg-[#f0f0f0] text-[13px] rounded-lg py-1 px-5">
                 {{tag.name}}({{tag.count}})

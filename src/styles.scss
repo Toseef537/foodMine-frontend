@@ -30,11 +30,19 @@ body {
 
     &:hover,
     &:focus {
-        @apply text-white;
-        background: rgb(70, 140, 255);
-        border: 1px solid rgb(20, 74, 225);
-        transition: 0.3s ease-in-out;
+        @apply border border-primary-light bg-primary-light;
     }
+}
+
+.router-link-active{
+    @apply text-primary bg-primary-light;
+}
+
+.dashboard-sidebar-items-hover{
+    &:hover{
+        @apply text-primary bg-primary-light;
+    }
+
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

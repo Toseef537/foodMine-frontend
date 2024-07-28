@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -11,7 +11,7 @@ import { User } from 'src/app/shared/models/user';
 @Component({
   selector: 'website-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatButtonModule, MatMenuModule, MatIconModule],
+  imports: [CommonModule, RouterLink, MatButtonModule, MatMenuModule, MatIconModule,NgOptimizedImage],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })

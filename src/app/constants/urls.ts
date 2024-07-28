@@ -12,6 +12,8 @@ export const ORDER_CREATE_URL = ORDER_URL + "/create";
 export const ORDER_NEW_FOR_CURRENT_USER_URL = ORDER_URL + '/newOrderForCurrentUser';
 export const DELETE_FOOD_URL = FOODS_URL + "/delete";
 export const Update_FOOD_URL = FOODS_URL + "/update";
+export const GET_ALL_ORDERS_URL = ORDER_URL + "/allOrders";
+
 
 
 
