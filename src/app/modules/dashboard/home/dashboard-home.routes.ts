@@ -1,12 +1,17 @@
 import { Route, Routes } from "@angular/router";
-import { HomeComponent } from "./home.component";
+import { DashboardHomeComponent } from "./home.component";
 import { dashboardHomeResolver } from "./dashboard-home.resolver";
 
 export default [
     {
-        path: '',component:HomeComponent,resolve:{
+        path: '', redirectTo: 'home', pathMatch: 'full'
+    },
+    {
+        path: 'home',
+        component: DashboardHomeComponent,
+        resolve: {
             dashboardHomeResolver
         }
-    },
+    }
 
-] as Route
+] as Routes

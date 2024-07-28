@@ -16,7 +16,7 @@ import { Observable } from 'rxjs';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class DashboardHomeComponent implements OnInit {
   foodItems: IFood[]=[];
   #foodItem!: Observable<IFood>;
   #homeService = inject(HomeService);
