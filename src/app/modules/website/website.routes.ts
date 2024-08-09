@@ -15,11 +15,11 @@ export default [
     { path: 'search/:searchTerm', component: HomeComponent },
     { path: 'food/:id', component: FoodDetailComponent },
     { path: 'tag/:tag', component: HomeComponent },
-    { path: 'cart-page', component: CartPageComponent },
+    { path: 'cart-page', loadChildren: () => import('./pages/cart-page/cart-page.routes') },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'checkout', component:CheckoutPageComponent ,canActivate:[AuthGuard]},
-    { path: 'payment', component:PaymentPageComponent ,canActivate:[AuthGuard]}
+    { path: 'checkout', component: CheckoutPageComponent, canActivate: [AuthGuard] },
+    { path: 'payment', component: PaymentPageComponent, canActivate: [AuthGuard] }
 
 
 ] as Routes

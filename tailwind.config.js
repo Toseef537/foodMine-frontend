@@ -18,7 +18,26 @@ module.exports = {
         '2xl': '6rem',
       }
     },
-    fontFamily              : {
+    fontSize: {
+      'xs'  : '0.625rem',
+      'sm'  : '0.75rem', // 12px
+      'md'  : '0.8125rem', // 13px
+      'base': '0.875rem', // 14px
+      'lg'  : '1rem', // 16px
+      'xl'  : '1.125rem', // 18px
+      '2xl' : '1.25rem', // 20px
+      '3xl' : '1.5rem', // 24px
+      '3.5xl': '1.625rem', // 26px
+      '3.75xl' : '1.75rem', // 28px
+      '4xl' : '2rem', // 32px
+      '5xl' : '2.25rem', // 36px
+      '6xl' : '2.5rem',
+      '7xl' : '3rem',
+      '8xl' : '4rem',
+      '9xl' : '6rem',
+      '10xl': '8rem'
+    },
+    fontFamily: {
       sans: `"Poppins"`,
       serif: `"IBM Plex Sans"`,
     },

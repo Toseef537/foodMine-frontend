@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { ADD_TO_CART_URL, GET_CART_URL } from 'src/app/constants/urls';
 import { Cart } from 'src/app/shared/models/cart';
 import { IFood } from 'src/app/shared/models/food';
 import { CartItem } from 'src/app/shared/models/items';
@@ -10,17 +12,35 @@ import { CartItem } from 'src/app/shared/models/items';
 export class CartService {
   cart: Cart = this.getCartFromLocalStorage();
   cartSubject: BehaviorSubject<Cart> = new BehaviorSubject(this.cart);
-
-  constructor() { }
+  #http: HttpClient = inject(HttpClient);
+  constructor() {
+    // this.loadCartFromBackend();
+  }
 
   /**
  * Adding Food to cart
  */
   addToCart(food: IFood): void {
-    let cartItem = this.cart.items.find(item => item.food.id == food.id);
-    if (cartItem) return;
+    const foodAlreadyInCart = this.cart.items.filter((item) => item.food.id === food.id);
+    if (foodAlreadyInCart.length > 0) return;
     this.cart.items.push(new CartItem(food));
     this.setCartToLocalStorage();
+    this.#http.post<Cart>(ADD_TO_CART_URL, this.cart).subscribe();
+  }
+
+  /**
+  * Getting Current Cart From Backend
+  */
+
+  loadCartFromBackend():Observable<Cart> {
+    return this.#http.get<Cart>(GET_CART_URL).pipe(
+      tap((currentCart) => {
+        this.cart=currentCart;
+        this.cartSubject.next(currentCart);
+        console.log('cart from backend',this.cartSubject.value);
+        this.setCartToLocalStorage();
+      })
+    )
   }
 
   removeFromCart(foodId: any): void {
@@ -91,6 +111,6 @@ export class CartService {
    */
   private getCartFromLocalStorage(): Cart {
     let cartJson = localStorage.getItem('Cart');
-    return cartJson ? JSON.parse(cartJson) : new Cart();
+    return cartJson ? JSON.parse(cartJson) :new Cart() ;
   }
 }

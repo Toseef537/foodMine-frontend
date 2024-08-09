@@ -13,6 +13,11 @@ export const ORDER_NEW_FOR_CURRENT_USER_URL = ORDER_URL + '/newOrderForCurrentUs
 export const DELETE_FOOD_URL = FOODS_URL + "/delete";
 export const Update_FOOD_URL = FOODS_URL + "/update";
 export const GET_ALL_ORDERS_URL = ORDER_URL + "/allOrders";
+export const CART_URL="/api/carts";
+export const ADD_TO_CART_URL =BASE_URL+CART_URL + "/create";
+export const GET_CART_URL =BASE_URL+CART_URL + "/currentUserCart";
+
+
 
 
 
