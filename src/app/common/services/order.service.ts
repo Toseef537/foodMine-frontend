@@ -12,6 +12,7 @@ export class OrderService {
   constructor() { }
 
   createOrder(order: Order){
+    console.log('order is',order);
     return this.#http.post<Order>(ORDER_CREATE_URL, order)
   }
 

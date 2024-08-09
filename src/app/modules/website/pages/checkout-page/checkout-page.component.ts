@@ -49,15 +49,16 @@ export class CheckoutPageComponent implements OnInit {
       this.#toastrService.warning('Please fill the inputs', 'Invalid Inputs')
       return;
     }
-    if (!this.order.addressLatlng) {
-      this.#toastrService.warning('Please Select Your Location On Map', 'Location')
-      return;
-    }
+    // if (!this.order.addressLatlng) {
+    //   this.#toastrService.warning('Please Select Your Location On Map', 'Location')
+    //   return;
+    // }
     this.order.name = this.checkoutForm.value.name;
     this.order.address = this.checkoutForm.value.address;
     this.#orderService.createOrder(this.order).subscribe({
       next: () => {
-        this.#router.navigateByUrl('/payment');
+        this.#toastrService.success('Your Order is Placed Successfully!')
+        this.#router.navigateByUrl('/');
       },
       error: (errorResponse) => {
         this.#toastrService.error(errorResponse.error, 'Cart');

@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { LOGIN_URL, SIGNUP_URL } from 'src/app/constants/urls';
 import { IUserLogin, IUserRegister } from 'src/app/shared/interfaces/user';
+import { Cart } from 'src/app/shared/models/cart';
 import { User } from 'src/app/shared/models/user';
 const USER_KEY = 'user';
 @Injectable({
@@ -12,6 +14,7 @@ const USER_KEY = 'user';
 export class UserService {
   #http: HttpClient = inject(HttpClient);
   #toastrService: ToastrService = inject(ToastrService);
+  #router:Router=inject(Router)
   private userSubject = new BehaviorSubject<User>(this.getUserFromLocalStorage());
   userObservable!: Observable<User>;
   constructor() {
@@ -75,7 +78,8 @@ get currentUser():User{
   logout() {
     this.userSubject.next(new User());
     localStorage.removeItem(USER_KEY);
-    window.location.reload();
+    localStorage.removeItem('Cart');
+    this.#router.navigateByUrl('/');
   }
 
   private setUserToLocalStorage(user: User) {
