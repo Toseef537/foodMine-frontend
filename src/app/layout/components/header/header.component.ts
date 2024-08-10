@@ -18,7 +18,6 @@ import { User } from 'src/app/shared/models/user';
 export class HeaderComponent {
   totalCount: number = 0;
   user!: User;
-  userLoggedIn!: User;
   #cartService: CartService = inject(CartService);
   #userService: UserService = inject(UserService);
   constructor() {
