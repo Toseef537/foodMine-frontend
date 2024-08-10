@@ -39,9 +39,9 @@ export class HomeComponent {
         })
       } 
       else {
-        this.#homeService.homePageData$.subscribe((items) => {
-          this.foodItems = items;
-
+        activatedRoute.data.subscribe((res)=>{
+          console.log('data from resolvers',res['homeData'].homeData);
+          this.foodItems=res['homeData'].homeData;
         })
       }
     })

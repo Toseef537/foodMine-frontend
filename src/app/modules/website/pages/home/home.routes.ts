@@ -7,7 +7,7 @@ export default [
         path: '', component: HomeComponent,
         title:'Home | Food Mine',
         resolve:{
-           homedata:homeResolver 
+           homeData:homeResolver 
         }
     }
 
